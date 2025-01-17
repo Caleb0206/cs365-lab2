@@ -47,6 +47,8 @@ create table Vendor (
     name VARCHAR(100) NOT NULL,
     location VARCHAR(100)
 );
+insert into Vendor(name, location)
+	values ('Macys', '91 Main St., Seattle, Washington');
 select * from Vendor;
 
 create table Transaction (
@@ -60,6 +62,9 @@ create table Transaction (
     FOREIGN KEY (card_number) references CreditCard(number),
     FOREIGN KEY (vendor_id) references Vendor(id)
 );
+insert into Transaction(date, customer_id, card_number, vendor_id, amount)
+	values ('2025-01-01', 1, 1234567, 1, 99.99),
+			('2025-04-01', 2, 1234567, 1, 20.0);
 select * from Transaction;
 drop table Transaction;
 
@@ -70,5 +75,15 @@ create table Payment (
     amount DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (card_number) references CreditCard(number)
 );
+insert into Payment(date, card_number, amount)
+	values ('2025-01-12', 1234567, 50);
 select * from Payment;
 drop table Payment;
+
+
+select * from Customer;
+select * from CreditCard;
+select * from Ownership;
+select * from Vendor;
+select * from Transaction;
+select * from Payment;

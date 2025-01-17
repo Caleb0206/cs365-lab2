@@ -6,8 +6,8 @@ create table Customer (
 	phone_number VARCHAR(15)
 );
 insert into Customer (ssn, name, address, phone_number) 
-	values ('8888', 'Dustin', '123 Main St.', '4089999990'),
-			('223', 'Abby', '123 Corner Rd.', '4085001111');
+	values ('223', 'Abby', '123 Corner Rd.', '4085001111'), 
+			('8888', 'Dustin', '123 Main St.', '4089999990');
 select * from Customer;
 drop table Customer;
 
@@ -18,7 +18,11 @@ create table CreditCard (
 	balance DECIMAL(10,2) DEFAULT 0,
 	active BOOLEAN DEFAULT FALSE
 );
+insert into CreditCard (number, type, credit_limit, balance)
+	values (1234567, 'Visa', 5000, 0), (1111111, 'Discover', 1000, 20);
+
 select * from CreditCard;
+drop table CreditCard;
 
 create table Ownership (
 	customer_id INTEGER,
@@ -28,7 +32,15 @@ create table Ownership (
     FOREIGN KEY (customer_id) references Customer(id),
     FOREIGN KEY (card_number) references CreditCard(number)
 );
+insert into Ownership(customer_id, card_number, is_current)
+	values (1, 1234567, true), (1, 1111111, true);
+insert into Ownership(customer_id, card_number, is_current)
+	values (2, 1234567, true), (2, 1111111, true);
+
+UPDATE Ownership SET is_current = FALSE WHERE customer_id = 1 AND card_number = 1111111;
+
 select * from Ownership;
+drop table Ownership;
 
 create table Vendor (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,6 +61,7 @@ create table Transaction (
     FOREIGN KEY (vendor_id) references Vendor(id)
 );
 select * from Transaction;
+drop table Transaction;
 
 create table Payment (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,3 +71,4 @@ create table Payment (
     FOREIGN KEY (card_number) references CreditCard(number)
 );
 select * from Payment;
+drop table Payment;

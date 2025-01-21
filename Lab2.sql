@@ -2,7 +2,7 @@ create table Customer (
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	ssn VARCHAR(20) UNIQUE NOT NULL,
 	name VARCHAR(50) NOT NULL,
-	address VARCHAR(100) UNIQUE,
+	address VARCHAR(100) ,
 	phone_number VARCHAR(15)
 );
 insert into Customer (ssn, name, address, phone_number) 
@@ -58,13 +58,13 @@ create table Transaction (
     card_number INT NOT NULL,
     vendor_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (customer_id) references Customer(id),
-    FOREIGN KEY (card_number) references CreditCard(number),
+    FOREIGN KEY (customer_id, card_number) references Ownership(customer_id, card_number),
     FOREIGN KEY (vendor_id) references Vendor(id)
 );
 insert into Transaction(date, customer_id, card_number, vendor_id, amount)
 	values ('2025-01-01', 1, 1234567, 1, 99.99),
 			('2025-04-01', 2, 1234567, 1, 20.0);
+
 select * from Transaction;
 drop table Transaction;
 
